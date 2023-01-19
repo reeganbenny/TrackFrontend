@@ -67,6 +67,12 @@ function App() {
       <div className="status">
         <button onClick={handleStatus}>{status ? "Stop" : "Start"}</button>
       </div>
+      {status && (
+        <div className="location">
+          longitude: {position.longitude}
+          latitude : {position.latitude}
+        </div>
+      )}
     </div>
   );
 }
