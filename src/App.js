@@ -33,6 +33,14 @@ function App() {
 
   useEffect(() => {
     if (status) {
+      alert(
+        "WatchId: ",
+        watchId,
+        " longitude: ",
+        longitude,
+        " latitude:",
+        latitude
+      );
       console.log("Position", position);
       fetch(api, {
         method: "POST",
