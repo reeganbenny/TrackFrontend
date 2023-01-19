@@ -10,18 +10,48 @@ function App() {
   useEffect(() => {
     console.log("Status Changed to ", status);
     if (status) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          alert(
+            "Lat: " +
+              position.coords.latitude +
+              "\nLon: " +
+              position.coords.longitude
+          );
+        },
+        function (error) {
+          alert(error.message);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+        }
+      );
+
       setWatchId(
         navigator.geolocation.watchPosition(
           (position) => {
-            const { latitude, longitude } = position.coords;
-            console.log("latitude - ", latitude, " longitude - ", longitude);
+            const { latitude, longitude, speed } = position.coords;
+            alert(
+              " latitude - " +
+                latitude +
+                " longitude - " +
+                longitude +
+                " Speed:" +
+                speed
+            );
             setPosition({
               latitude: latitude,
               longitude: longitude,
+              speed: speed,
             });
           },
           (error) => {
             console.log("Error- ", error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
           }
         )
       );
@@ -33,14 +63,6 @@ function App() {
 
   useEffect(() => {
     if (status) {
-      alert(
-        "WatchId: ",
-        watchId,
-        " longitude: ",
-        longitude,
-        " latitude:",
-        latitude
-      );
       console.log("Position", position);
       fetch(api, {
         method: "POST",
